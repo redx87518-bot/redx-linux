@@ -7,8 +7,6 @@ import okhttp3.Request
 import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.GZIPInputStream
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
-import java.io.BufferedInputStream
 import java.util.concurrent.TimeUnit
 
 /**
