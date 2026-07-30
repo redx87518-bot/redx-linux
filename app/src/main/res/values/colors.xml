@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="terminal_bg">#FF000000</color>
+    <color name="terminal_bg_light">#FF1A1A1A</color>
+    <color name="terminal_keybg">#FF111111</color>
+    <color name="terminal_green">#FF33FF33</color>
+    <color name="terminal_green_dim">#FF1A8C1A</color>
+    <color name="key_text">#FFCCCCCC</color>
+    <color name="key_pressed">#FF222222</color>
+</resources>

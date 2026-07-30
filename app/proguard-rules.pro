@@ -1,0 +1,5 @@
+-keep class com.redx.linux.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn okhttp3.**
+-dontwarn okio.**

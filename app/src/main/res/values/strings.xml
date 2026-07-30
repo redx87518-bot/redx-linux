@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RedX Linux</string>
+    <string name="setup_ready">First-time setup required.\nAlpine Linux will be downloaded (~3 MB).</string>
+    <string name="setup_initializing">Initializing…</string>
+    <string name="setup_complete">Installation complete!</string>
+    <string name="setup_error">Setup failed: %1$s</string>
+    <string name="btn_install">Install Alpine Linux</string>
+    <string name="btn_launch">Launch Terminal</string>
+    <string name="session_ended_title">Session Ended</string>
+    <string name="session_ended_message">The terminal session has ended.</string>
+    <string name="new_session">New Session</string>
+    <string name="exit">Exit</string>
+</resources>

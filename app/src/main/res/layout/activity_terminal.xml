@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/terminal_bg">
+
+    <!-- Terminal View (takes all available space) -->
+    <com.redx.linux.terminal.TerminalView
+        android:id="@+id/terminal_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/terminal_bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <!-- Special Key Bar -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/terminal_keybg"
+        android:scrollbars="none"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:divider="@drawable/key_divider"
+            android:showDividers="middle">
+
+            <Button
+                android:id="@+id/btn_esc"
+                style="@style/KeyButton"
+                android:text="ESC" />
+
+            <Button
+                android:id="@+id/btn_ctrl"
+                style="@style/KeyButton"
+                android:text="CTRL" />
+
+            <Button
+                android:id="@+id/btn_tab"
+                style="@style/KeyButton"
+                android:text="TAB" />
+
+            <Button
+                android:id="@+id/btn_up"
+                style="@style/KeyButton"
+                android:text="▲" />
+
+            <Button
+                android:id="@+id/btn_down"
+                style="@style/KeyButton"
+                android:text="▼" />
+
+            <Button
+                android:id="@+id/btn_left"
+                style="@style/KeyButton"
+                android:text="◀" />
+
+            <Button
+                android:id="@+id/btn_right"
+                style="@style/KeyButton"
+                android:text="▶" />
+
+            <Button
+                android:id="@+id/btn_home"
+                style="@style/KeyButton"
+                android:text="HOME" />
+
+            <Button
+                android:id="@+id/btn_end"
+                style="@style/KeyButton"
+                android:text="END" />
+
+            <Button
+                android:id="@+id/btn_pgUp"
+                style="@style/KeyButton"
+                android:text="PgUp" />
+
+            <Button
+                android:id="@+id/btn_pgDn"
+                style="@style/KeyButton"
+                android:text="PgDn" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

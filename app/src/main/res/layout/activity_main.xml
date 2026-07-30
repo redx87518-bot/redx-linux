@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/terminal_bg"
+    tools:context=".MainActivity">
+
+    <!-- SETUP SCREEN -->
+    <LinearLayout
+        android:id="@+id/layout_setup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RedX"
+            android:textColor="@color/terminal_green"
+            android:textSize="64sp"
+            android:fontFamily="monospace"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LINUX"
+            android:textColor="@color/terminal_green_dim"
+            android:textSize="18sp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.5"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alpine Linux · PRoot · No Root Required"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="48dp"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_ready"
+            android:textColor="@color/terminal_green"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="12dp"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginBottom="8dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/terminal_green"
+            android:progressBackgroundTint="@color/terminal_bg_light"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/terminal_green_dim"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="32dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_install"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_install"
+            android:textColor="@color/terminal_bg"
+            android:backgroundTint="@color/terminal_green"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="32dp"/>
+
+    </LinearLayout>
+
+    <!-- READY SCREEN -->
+    <LinearLayout
+        android:id="@+id/layout_ready"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✓ Ready"
+            android:textColor="@color/terminal_green"
+            android:textSize="32sp"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btn_launch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_launch"
+            android:textColor="@color/terminal_bg"
+            android:backgroundTint="@color/terminal_green"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="32dp"/>
+    </LinearLayout>
+
+</FrameLayout>
