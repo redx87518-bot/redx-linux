@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build Debug & Release APK
+    name: Build APK (with embedded PRoot)
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +21,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK 27
+        run: |
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+            "ndk;27.2.12479018" 2>/dev/null || true
+          echo "NDK=$ANDROID_HOME/ndk/27.2.12479018" >> $GITHUB_ENV
 
       - name: Install Gradle 8.7
         run: |
@@ -32,18 +37,30 @@ jobs:
           unzip -q /tmp/gradle.zip -d /opt/gradle
           echo "/opt/gradle/gradle-8.7/bin" >> $GITHUB_PATH
 
-      - name: Grant gradlew permission
-        run: chmod +x gradlew
-
-      - name: Cache Gradle packages
+      - name: Cache Gradle + NDK build artifacts
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
+            /tmp/proot_src
+          key: ${{ runner.os }}-gradle-proot-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml', 'scripts/**') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-proot-
+
+      - name: Build PRoot static binaries (NDK)
+        run: |
+          chmod +x scripts/build_proot.sh
+          scripts/build_proot.sh
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
+
+      - name: Verify PRoot binaries were built
+        run: |
+          echo "Assets directory contents:"
+          ls -lh app/src/main/assets/ 2>/dev/null || echo "No assets yet"
+          test -f app/src/main/assets/proot-arm64-v8a && echo "✓ arm64-v8a OK" || echo "✗ arm64-v8a MISSING"
+          test -f app/src/main/assets/proot-armeabi-v7a && echo "✓ armeabi-v7a OK" || echo "✗ armeabi-v7a MISSING"
 
       - name: Build Debug APK
         run: gradle assembleDebug --no-daemon --stacktrace
@@ -55,6 +72,15 @@ jobs:
         env:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
 
+      - name: APK sizes
+        run: |
+          echo "## Build Artifacts" >> $GITHUB_STEP_SUMMARY
+          DEBUG=$(du -sh app/build/outputs/apk/debug/app-debug.apk 2>/dev/null | cut -f1)
+          RELEASE=$(du -sh app/build/outputs/apk/release/app-release-unsigned.apk 2>/dev/null | cut -f1)
+          echo "- Debug APK: $DEBUG" >> $GITHUB_STEP_SUMMARY
+          echo "- Release APK: $RELEASE" >> $GITHUB_STEP_SUMMARY
+          echo "- Download from Artifacts section below" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
@@ -62,16 +88,9 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
 
-      - name: Upload Release APK
+      - name: Upload Release APK (unsigned)
         uses: actions/upload-artifact@v4
         with:
           name: RedXLinux-release-unsigned
           path: app/build/outputs/apk/release/app-release-unsigned.apk
           retention-days: 30
-
-      - name: Get APK size
-        run: |
-          DEBUG_SIZE=$(du -sh app/build/outputs/apk/debug/app-debug.apk | cut -f1)
-          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Debug APK: $DEBUG_SIZE" >> $GITHUB_STEP_SUMMARY
-          echo "- 🟢 Download the APK from the Artifacts section above" >> $GITHUB_STEP_SUMMARY
